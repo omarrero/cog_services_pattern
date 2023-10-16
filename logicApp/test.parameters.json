@@ -1,0 +1,51 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "subscriptionId": {
+            "value": "b734d887-20b3-4c8a-bdaa-70ac9da657db"
+        },
+        "name": {
+            "value": "pdfHandlerWorkflow"
+        },
+        "location": {
+            "value": "East US 2"
+        },
+        "ftpsState": {
+            "value": "FtpsOnly"
+        },
+        "storageAccountName": {
+            "value": "santsprintdeveus2"
+        },
+        "sku": {
+            "value": "WorkflowStandard"
+        },
+        "skuCode": {
+            "value": "WS1"
+        },
+        "numberOfWorkers": {
+            "value": "1"
+        },
+        "workerSize": {
+            "value": "3"
+        },
+        "workerSizeId": {
+            "value": "3"
+        },
+        "use32BitWorkerProcess": {
+            "value": false
+        },
+        "netFrameworkVersion": {
+            "value": "v6.0"
+        },
+        "hostingPlanName": {
+            "value": "ASP-rgntsprintdeveus2-870d"
+        },
+        "serverFarmResourceGroup": {
+            "value": "rg-ntsprint-dev-eus2"
+        },
+        "alwaysOn": {
+            "value": false
+        }
+    }
+}

@@ -1,0 +1,91 @@
+{
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "$connections": {
+        "defaultValue": {},
+        "type": "Object"
+      }
+    },
+    "triggers": {
+      "When_a_file_is_added_or_modified_(properties_only)": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['datalakestore']['connectionId']"
+            }
+          },
+          "method": "get",
+          "path": "/datasets/default/triggers/batch/onupdatedfile",
+          "queries": {
+            "folderPath": "[concat('/{dataLakeStoreFileSystemName}/{dataLakeStoreFolderPath}')]"
+          }
+        }
+      }
+    },
+    "actions": {
+      "Get_blob_content_using_path": {
+        "inputs": {
+          "body": {
+            "path": "@triggerBody()?['Path']"
+          },
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['datalakestore']['connectionId']"
+            }
+          },
+          "method": "get",
+          "path": "/datasets/default/files/@{encodeURIComponent(triggerBody()?['Path'])}/content"
+        },
+        "runAfter": {
+          "When_a_file_is_added_or_modified_(properties_only)": [
+            "Succeeded"
+          ]
+        },
+        "type": "ApiConnection"
+      },
+      "Form_Recognizer_-_Extract_text_from_image": {
+        "inputs": {
+          "body": {
+            "fileUrl": "@{outputs('Get_blob_content_using_path')?['body']}"
+          },
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['formrecognizer']['connectionId']"
+            }
+          },
+          "method": "post",
+          "path": "/formrecognizer/v2.1-preview.3/prebuilt/invoice/analyze?includeTextDetails=true"
+        },
+        "runAfter": {
+          "Get_blob_content_using_path": [
+            "Succeeded"
+          ]
+        },
+        "type": "ApiConnection"
+      },
+      "Create_or_update_document": {
+        "inputs": {
+          "body": {
+            "id": "@{guid()}",
+            "text": "@{outputs('Form_Recognizer_-_Extract_text_from_image')?['body']}"
+          },
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['cosmosdb']['connectionId']"
+            }
+          },
+          "method": "post",
+          "path": "/dbs/@{encodeURIComponent('myDatabase')}/colls/@{encodeURIComponent('myContainer')}/docs"
+        },
+        "runAfter": {
+          "Form_Recognizer_-_Extract_text_from_image": [
+            "Succeeded"
+          ]
+        },
+        "type": "ApiConnection"
+      }
+    },
+    "outputs": {}
+}

@@ -4,6 +4,7 @@ param storageAccountName string
 param location string
 @description('What language was used to deploy this resource')
 param language string
+param accessTier string = 'Hot'
 
 @description('Storage Account type')
 @allowed([
@@ -31,5 +32,8 @@ resource sa 'Microsoft.Storage/storageAccounts@2021-06-01' = {
     Language: language
   }
   kind: 'StorageV2'
-  properties: {}
+  properties: {
+    accessTier: accessTier
+    isHnsEnabled: true
+  }
 }

@@ -1,8 +1,8 @@
 @description('Location for all resources.')
 param location string
-@description('Base name that will appear for all resources.') 
-param baseName string = 'ntsprint'
-@description('Three letter environment abreviation to denote environment that will appear in all resource names') 
+@description('Base name that will appear for all resources.')
+param baseName string = 'olivio'
+@description('Three letter environment abreviation to denote environment that will appear in all resource names')
 param environmentName string = 'dev'
 @description('Form Recognizer Sku')
 param formRecognizerSKU string
@@ -16,7 +16,8 @@ var regionReference = {
   westus: 'wus'
   westus2: 'wus2'
 }
-var nameSuffix = toLower('${baseName}-${environmentName}-${regionReference[location]}')
+var nameSuffix = '${baseName}-${environmentName}-${regionReference[location]}'
+var resourceGroupName = 'rg-${nameSuffix}'
 var language = 'Bicep'
 
 /* Since we are mismatching scopes with a deployment at subscription and resource at Resource Group
@@ -24,7 +25,7 @@ var language = 'Bicep'
  */
 
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' ={
-  name: toLower('rg-${nameSuffix}')
+  name: resourceGroupName
   location: location
   tags:{
     Customer: 'NTSprint'

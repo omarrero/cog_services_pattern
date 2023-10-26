@@ -21,7 +21,7 @@
       "value": ""
     },
     "dataLakeStoreAccountName": {
-      "value": "ntsprintdatalake"
+      "value": "oliviodatalake"
     },
     "cosmosDbAccountName": {
       "value": "myDatabase"

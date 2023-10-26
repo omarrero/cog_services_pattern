@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "baseName": {
-      "value": "ntsprint"
+      "value": "olivio"
     },
     "environmentName":{
       "value": "dev"
@@ -13,6 +13,6 @@
     },
     "storageAccountType":{
       "value": "Standard_LRS"
-    } 
+    }
   }
 }

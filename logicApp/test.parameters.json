@@ -15,7 +15,7 @@
             "value": "FtpsOnly"
         },
         "storageAccountName": {
-            "value": "santsprintdeveus2"
+            "value": "saoliviodeveus2"
         },
         "sku": {
             "value": "WorkflowStandard"
@@ -39,10 +39,10 @@
             "value": "v6.0"
         },
         "hostingPlanName": {
-            "value": "ASP-rgntsprintdeveus2-870d"
+            "value": "ASP-rgoliviodeveus2-870d"
         },
         "serverFarmResourceGroup": {
-            "value": "rg-ntsprint-dev-eus2"
+            "value": "rg-olivio-dev-eus2"
         },
         "alwaysOn": {
             "value": false
